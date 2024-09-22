@@ -11,7 +11,7 @@ namespace ExercisesDAL
             Student? selectedStudent;
             try
             {
-                SomeSchoolContext _db = new();
+                HelpdeskDb _db = new();
                 selectedStudent = await _db.Students.FirstOrDefaultAsync(stu => stu.LastName == name);
             }
             catch (Exception ex)
@@ -28,7 +28,7 @@ namespace ExercisesDAL
             Student? selectedStudent;
             try
             {
-                SomeSchoolContext _db = new();
+                HelpdeskDb _db = new();
                 selectedStudent = await _db.Students.FindAsync(id);
             }
             catch (Exception ex)
@@ -45,7 +45,7 @@ namespace ExercisesDAL
             Student? selectedStudent;
             try
             {
-                SomeSchoolContext _db = new();
+                HelpdeskDb _db = new();
                 selectedStudent = await _db.Students.FirstOrDefaultAsync(stu => stu.PhoneNo == phoneNum);
             }
             catch (Exception ex)
@@ -61,7 +61,7 @@ namespace ExercisesDAL
             List<Student> allStudents;
             try
             {
-                SomeSchoolContext _db = new();
+                HelpdeskDb _db = new();
                 allStudents = await _db.Students.ToListAsync();
             }
             catch (Exception ex)
@@ -76,7 +76,7 @@ namespace ExercisesDAL
         {
             try
             {
-                SomeSchoolContext _db = new();
+                HelpdeskDb _db = new();
                 await _db.Students.AddAsync(newStudent);
                 await _db.SaveChangesAsync();
             }
@@ -94,7 +94,7 @@ namespace ExercisesDAL
             int studentUpdated = -1;
             try
             {
-                SomeSchoolContext _db = new();
+                HelpdeskDb _db = new();
                 Student? currentStudent = await _db.Students.FirstOrDefaultAsync(stu => stu.Id == updatedStudent.Id);
                 _db.Entry(currentStudent!).CurrentValues.SetValues(updatedStudent);
                 studentUpdated = await _db.SaveChangesAsync();      //should return 1
@@ -113,7 +113,7 @@ namespace ExercisesDAL
             int studentsDeleted = -1;
             try
             {
-                SomeSchoolContext _db = new();
+                HelpdeskDb _db = new();
                 Student? selectedStudent = await _db.Students.FirstOrDefaultAsync(stu => stu.Id == id);
                 _db.Students.Remove(selectedStudent!);
                 studentsDeleted = await _db.SaveChangesAsync();     //returns # of rows removed
