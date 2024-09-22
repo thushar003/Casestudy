@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace ExercisesDAL;
+namespace HelpdeskDAL;
 
-public partial class Student
+public partial class Employee
 {
     public int Id { get; set; }
 
@@ -17,11 +17,13 @@ public partial class Student
 
     public string? Email { get; set; }
 
-    public int DivisionId { get; set; }
+    public int DepartmentId { get; set; }
 
-    public byte[]? Picture { get; set; }
+    public bool? IsTech { get; set; }
+
+    public byte[]? StaffPicture { get; set; }
 
     public byte[] Timer { get; set; } = null!;
 
-    public virtual Division Division { get; set; } = null!;
+    public virtual Department Department { get; set; } = null!;
 }

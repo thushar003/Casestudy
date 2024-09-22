@@ -2,36 +2,36 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 
-namespace ExercisesDAL;
+namespace HelpdeskDAL;
 
-public partial class HelpdeskDb : DbContext
+public partial class HelpdeskContext : DbContext
 {
-    public HelpdeskDb()
+    public HelpdeskContext()
     {
     }
-    
-    public HelpdeskDb(DbContextOptions<HelpdeskDb> options)
+
+    public HelpdeskContext(DbContextOptions<HelpdeskContext> options)
         : base(options)
     {
     }
 
-    public virtual DbSet<Division> Divisions { get; set; }
+    public virtual DbSet<Department> Departments { get; set; }
 
-    public virtual DbSet<Student> Students { get; set; }
+    public virtual DbSet<Employee> Employees { get; set; }
+
+    public virtual DbSet<Problem> Problems { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-        optionsBuilder.UseSqlServer("Server=(localdb)\\ProjectModels;Database=SomeschoolDb;Trusted_Connection=True;");
-        optionsBuilder.UseLazyLoadingProxies();
-    }
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
+        => optionsBuilder.UseSqlServer("Server=(localdb)\\ProjectModels;Database=HelpdeskDb;Trusted_Connection=True;");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Division>(entity =>
+        modelBuilder.Entity<Department>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK_Division");
+            entity.HasKey(e => e.Id).HasName("PK_Department");
 
-            entity.Property(e => e.Name)
+            entity.Property(e => e.DepartmentName)
                 .HasMaxLength(50)
                 .IsUnicode(false);
             entity.Property(e => e.Timer)
@@ -39,9 +39,9 @@ public partial class HelpdeskDb : DbContext
                 .IsConcurrencyToken();
         });
 
-        modelBuilder.Entity<Student>(entity =>
+        modelBuilder.Entity<Employee>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK_Student");
+            entity.HasKey(e => e.Id).HasName("PK_Employee");
 
             entity.Property(e => e.Email)
                 .HasMaxLength(50)
@@ -62,10 +62,22 @@ public partial class HelpdeskDb : DbContext
                 .HasMaxLength(4)
                 .IsUnicode(false);
 
-            entity.HasOne(d => d.Division).WithMany(p => p.Students)
-                .HasForeignKey(d => d.DivisionId)
+            entity.HasOne(d => d.Department).WithMany(p => p.Employees)
+                .HasForeignKey(d => d.DepartmentId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_StudentInDiv");
+                .HasConstraintName("FK_EmployeeInDept");
+        });
+
+        modelBuilder.Entity<Problem>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK_Problem");
+
+            entity.Property(e => e.Description)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.Timer)
+                .IsRowVersion()
+                .IsConcurrencyToken();
         });
 
         OnModelCreatingPartial(modelBuilder);
