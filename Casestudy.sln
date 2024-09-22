@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34616.47
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelpdeskDAL", "HelpdeskDAL\HelpdeskDAL.csproj", "{2E41C8DB-5D6D-4592-9427-ED6C14585A27}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HelpdeskDAL", "HelpdeskDAL\HelpdeskDAL.csproj", "{2E41C8DB-5D6D-4592-9427-ED6C14585A27}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CasestudyTests", "CasestudyTests\CasestudyTests.csproj", "{8A7A68F6-5E77-486C-B338-AC7536E97A38}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{2E41C8DB-5D6D-4592-9427-ED6C14585A27}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2E41C8DB-5D6D-4592-9427-ED6C14585A27}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2E41C8DB-5D6D-4592-9427-ED6C14585A27}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8A7A68F6-5E77-486C-B338-AC7536E97A38}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8A7A68F6-5E77-486C-B338-AC7536E97A38}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8A7A68F6-5E77-486C-B338-AC7536E97A38}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8A7A68F6-5E77-486C-B338-AC7536E97A38}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
