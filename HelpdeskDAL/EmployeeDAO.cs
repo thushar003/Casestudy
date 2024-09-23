@@ -40,6 +40,23 @@ namespace HelpdeskDAL
             return selectedEmployee;
         }
 
+        public async Task<Employee> GetById(int id)
+        {
+            Employee? selectedEmployee;
+            try
+            {
+                HelpdeskContext _db = new();
+                selectedEmployee = await _db.Employees.FindAsync(id);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Problem in " + GetType().Name + " " + MethodBase.GetCurrentMethod()!.Name + " " + ex.Message);
+                throw;
+            }
+
+            return selectedEmployee;
+        }
+
         public async Task<List<Employee>> GetAll()
         {
             List<Employee> allEmployees;
