@@ -86,3 +86,8 @@ SELECT COUNT(*) Departments FROM Departments
 GO
 SELECT COUNT(*) AS Employees FROM Employees
 GO
+
+USE MASTER;
+USE HelpdeskDb;
+
+SELECT * FROM Employees;

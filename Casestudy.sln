@@ -5,7 +5,9 @@ VisualStudioVersion = 17.9.34616.47
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HelpdeskDAL", "HelpdeskDAL\HelpdeskDAL.csproj", "{2E41C8DB-5D6D-4592-9427-ED6C14585A27}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CasestudyTests", "CasestudyTests\CasestudyTests.csproj", "{8A7A68F6-5E77-486C-B338-AC7536E97A38}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CasestudyTests", "CasestudyTests\CasestudyTests.csproj", "{8A7A68F6-5E77-486C-B338-AC7536E97A38}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelpdeskViewModels", "HelpdeskViewModels\HelpdeskViewModels.csproj", "{0782B51F-77B6-4F23-B9E3-DDF3727AD9DD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{8A7A68F6-5E77-486C-B338-AC7536E97A38}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8A7A68F6-5E77-486C-B338-AC7536E97A38}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8A7A68F6-5E77-486C-B338-AC7536E97A38}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0782B51F-77B6-4F23-B9E3-DDF3727AD9DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0782B51F-77B6-4F23-B9E3-DDF3727AD9DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0782B51F-77B6-4F23-B9E3-DDF3727AD9DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0782B51F-77B6-4F23-B9E3-DDF3727AD9DD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
