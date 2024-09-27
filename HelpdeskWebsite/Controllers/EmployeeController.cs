@@ -1,6 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Reflection;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
 using HelpdeskViewModels;
 
 namespace HelpdeskWebsite.Controllers
@@ -9,7 +10,7 @@ namespace HelpdeskWebsite.Controllers
         [ApiController]
         public class EmployeeController : ControllerBase
         {
-            [HttpGet("{lastname}")]
+            [HttpGet("{email}")]
             public async Task<IActionResult> GetByEmail(string email)
             {
                 try
