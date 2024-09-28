@@ -39,9 +39,9 @@ namespace CasestudyTests
             vm = new()
             {
                 Title = "Mr.",
-                Firstname = "Some",
+                Firstname = "Thushar",
                 Lastname = "Joji",
-                Email = "some@abc.com",
+                Email = "tj@abc.com",
                 Phoneno = "(777) 777-7777",
                 DepartmentId = 100
             };

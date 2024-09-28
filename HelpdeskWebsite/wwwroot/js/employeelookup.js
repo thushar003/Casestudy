@@ -6,10 +6,11 @@ $(() => { // main jQuery routine - executes every on page load, $ is short for j
             let response = await fetch(`/api/employee/${email}`);
             if (response.ok) {
                 let data = await response.json(); // this returns a promise, so we await it
-                if (data.email !== "not found") {
-                    $("#title").text(data.Title);
-                    $("#firstname").text(data.FirstName);
-                    $("#phone").text(data.PhoneNo);
+                if (data.email !== "unknown") {
+                    $("#title").text(data.title);
+                    $("#firstname").text(data.firstname);
+                    $("#lastname").text(data.lastname);
+                    $("#phone").text(data.phoneno);
                     $("#status").text("employee found");
                 } else {
                     $("#firstname").text("not found");
