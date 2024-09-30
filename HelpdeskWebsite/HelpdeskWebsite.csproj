@@ -14,4 +14,8 @@
     <ProjectReference Include="..\HelpdeskViewModels\HelpdeskViewModels.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\img\" />
+  </ItemGroup>
+
 </Project>
