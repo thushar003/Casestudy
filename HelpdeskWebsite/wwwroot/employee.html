@@ -7,6 +7,7 @@
     <link href="/lib/css/bootstrap.min.css" rel="stylesheet" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 </head>
+
 <body>
 <nav class="navbar navbar-expand-md navbar-light bg-danger">
     <a class="navbar-brand mx-3" href="#">Case #1</a>
@@ -24,10 +25,14 @@
         </ul>
     </div>
 </nav>
-<img src="/img/helpdesk.jpg" height="100px" width="100px"/>
-<button type="button" class="btn btn-outline-secondary m-2" data-bs-toggle="modal" data-bs-target="#theModal">
-    Lookup Employee
-</button>
+<div id="image">
+    <img src="/img/helpdesk.jpg" height="100px" width="100px" />
+</div>
+<div id="button-place">
+    <button type="button" class="btn btn-outline-secondary m-2" data-bs-toggle="modal" data-bs-target="#theModal">
+        Lookup Employee
+    </button>
+</div>
 <div class="modal fade" id="theModal" data-bs-backdrop="static"
      data-bs-keyboard="false" tabindex="-1" aria-labelledby="theModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -68,12 +73,16 @@
                         <div id="status" class="text-left mt-3 mb-2"></div>
                     </div>
                 </div>
-                </div>
             </div>
         </div>
     </div>
+</div>
 <script src="/lib/js/jquery.min.js"></script>
 <script src="/lib/js/bootstrap.min.js"></script>
 <script src="/js/employeelookup.js"></script>
 </body>
+<hr />
+<footer>
+    2024, Thushar Joji
+</footer>
 </html>
