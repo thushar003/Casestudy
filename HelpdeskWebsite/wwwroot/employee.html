@@ -2,9 +2,10 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title></title>
+    <title>Lab 10b Employee List</title>
     <link rel="icon" href="data:;base64,iVBORwOKGgo=" />
     <link href="/lib/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="css/employee.css" rel="stylesheet" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 </head>
 
@@ -28,10 +29,10 @@
 <div id="image">
     <img src="/img/helpdesk.jpg" height="100px" width="100px" />
 </div>
-<div id="button-place">
-    <button type="button" class="btn btn-outline-secondary m-2" data-bs-toggle="modal" data-bs-target="#theModal">
-        Lookup Employee
-    </button>
+<div class="justify-content-center align-items-center row mt-5 ml-1">
+    <div class="col-12 text-center p-3"><h2>Current Employees</h2></div>
+    <div class="list-group col-10" id="employeeList" style="height:45vh;">
+    </div>
 </div>
 <div class="modal fade" id="theModal" data-bs-backdrop="static"
      data-bs-keyboard="false" tabindex="-1" aria-labelledby="theModalLabel" aria-hidden="true">
@@ -48,30 +49,48 @@
                     </div>
                     <div class="card-body p-0 ml-1">
                         <div class="row">
-                            <div class="col-3 text-right" style="font-weight:bold;">Title:</div>
-                            <div class="col-3 text-left" id="title"></div>
-                            <div class="col-3 text-right" style="font-weight:bold;">First:</div>
-                            <div class="col-3 text-left" id="firstname"></div>
-                        </div>
-                        <div class="row">
-                            <div class="col-3 text-right" style="font-weight:bold;">Last:</div>
-                            <div class="col-3 text-left" id="lastname"></div>
-                        </div>
-                        <div class="row">
-                            <div class="col-3 text-right" style="font-weight:bold;">Phone:</div>
-                            <div class="col-4 text-left" id="phone"></div>
-                        </div>
-                        <div class="row">
-                            <div class="col-3" style="font-weight:bold">Email:</div>
+                            <div class="col-4">Title:</div>
                             <div class="col-8">
-                                <input type="text" placeholder="enter email" id="TextBoxEmail" class="form-control my-2" />
+                                <input type="text"
+                                       placeholder="enter title"
+                                       id="TextBoxT"
+                                       class="form-control" />
+                            </div>
+                            <div class="col-4">First:</div>
+                            <div class="col-8">
+                                <input type="text"
+                                       placeholder="enter first name"
+                                       id="TextBoxFirstN"
+                                       class="form-control" />
+                            </div>
+                            <div class="col-4">Last:</div>
+                            <div class="col-8">
+                                <input type="text"
+                                       placeholder="enter last name"
+                                       id="TextBoxLastN"
+                                       class="form-control" />
+                            </div>
+                            <div class="col-4">Email:</div>
+                            <div class="col-8">
+                                <input type="text"
+                                       placeholder="enter email"
+                                       id="TextBoxEmail"
+                                       class="form-control" />
+                            </div>
+                            <div class="col-4">Phone Number:</div>
+                            <div class="col-8">
+                                <input type="text"
+                                       placeholder="enter phone number"
+                                       id="TextBoxPhone"
+                                       class="form-control" />
                             </div>
                         </div>
+                        <div class="card-footer text-center">
+                            <input type="button" value="Update" id="actionbutton" class="m-3" />
+                            <div id="status" class="text-left mt-3 mb-2"></div>
+                        </div>
                     </div>
-                    <div class="card-footer text-center">
-                        <input type="button" value="Find Employee" id="getbutton" />
-                        <div id="status" class="text-left mt-3 mb-2"></div>
-                    </div>
+                    
                 </div>
             </div>
         </div>
@@ -79,10 +98,10 @@
 </div>
 <script src="/lib/js/jquery.min.js"></script>
 <script src="/lib/js/bootstrap.min.js"></script>
-<script src="/js/employeelookup.js"></script>
+<script src="/js/employee.js"></script>
 </body>
-<hr />
-<footer>
+<!--<hr />-->
+<!--<footer>
     2024, Thushar Joji
-</footer>
+</footer>-->
 </html>

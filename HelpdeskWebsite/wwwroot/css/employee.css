@@ -1,0 +1,12 @@
+﻿#status {
+    background-color: green;
+    font-family: Helvetica;
+    font-size: large;
+    color: yellow;
+}
+
+button.list-group-item {
+    color: darkslategray;
+    font-family: Helvetica;
+    font-size: larger;
+}

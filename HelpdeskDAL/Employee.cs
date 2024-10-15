@@ -3,10 +3,8 @@ using System.Collections.Generic;
 
 namespace HelpdeskDAL;
 
-public partial class Employee
+public partial class Employee : HelpdeskEntity
 {
-    public int Id { get; set; }
-
     public string? Title { get; set; }
 
     public string? FirstName { get; set; }
@@ -22,8 +20,6 @@ public partial class Employee
     public bool? IsTech { get; set; }
 
     public byte[]? StaffPicture { get; set; }
-
-    public byte[] Timer { get; set; } = null!;
 
     public virtual Department Department { get; set; } = null!;
 }
