@@ -49,7 +49,7 @@ namespace HelpdeskWebsite.Controllers
                 }
             }
 
-        [HttpGet]
+            [HttpGet]
             public async Task<IActionResult> GetAll()
             {
                 try
@@ -57,6 +57,23 @@ namespace HelpdeskWebsite.Controllers
                     EmployeeViewModel viewmodel = new();
                     List<EmployeeViewModel> allEmployees = await viewmodel.GetAll();
                     return Ok(allEmployees);
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine("Problem in " + GetType().Name + " " +
+                                    MethodBase.GetCurrentMethod()!.Name + " " + ex.Message);
+                    return StatusCode(StatusCodes.Status500InternalServerError); // something went wrong
+                }
+            }
+            [HttpPost]
+            public async Task<ActionResult> Post(EmployeeViewModel viewmodel)
+            {
+                try
+                {
+                    await viewmodel.Add();
+                    return viewmodel.Id > 1
+                        ? Ok(new { msg = "Employee " + viewmodel.Lastname + " added!" })
+                        : Ok(new { msg = "employee " + viewmodel.Lastname + " not added!" });
                 }
                 catch (Exception ex)
                 {

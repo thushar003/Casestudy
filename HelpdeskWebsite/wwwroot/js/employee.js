@@ -7,7 +7,7 @@ $(() => { // main jQuery routine - executes every on page load, $ is short for j
                 let payload = await response.json(); // this returns a promise, so we await it
                 buildEmployeeList(payload);
                 msg === "" ? // are we appending to an existing message
-                    $("#status").text("employees Loaded") : $("#status").text(`${msg} - employees Loaded`);
+                    $("#status").text("Employees Loaded") : $("#status").text(`${msg} - Employees Loaded`);
             } else if (response.status !== 404) { // probably some other client side error
                 let problemJson = await response.json();
                 errorRtn(problemJson, response.status);
@@ -28,6 +28,8 @@ $(() => { // main jQuery routine - executes every on page load, $ is short for j
 </div>`);
         div.appendTo($("#employeeList"));
         sessionStorage.setItem("allemployees", JSON.stringify(data));
+        btn = $(`<button class="list-group-item row d-flex" id="0">...click to add employee</button>`);
+        btn.appendTo($("#employeeList"));
         data.forEach(emp => {
             btn = $(`<button class="list-group-item row d-flex" id="${emp.id}">`);
             btn.html(`<div class="col-4" id="employeetitle${emp.id}">${emp.title}</div>
@@ -38,7 +40,82 @@ $(() => { // main jQuery routine - executes every on page load, $ is short for j
         }); // forEach
     }; // buildEmployeeList
     getAll(""); // first grab the data from the server
-
+    const clearModalFields = () => {
+        $("#TextBoxT").val("");
+        // clean out the other four text boxes go here as well
+        $("#TextBoxFirstN").val("");
+        $("#TextBoxLastN").val("");
+        $("#TextBoxPhoneNo").val("");
+        $("#TextBoxEmail").val("");
+        sessionStorage.removeItem("employee");
+        $("#theModal").modal("toggle");
+    }; // clearModalFields
+    const setupForAdd = () => {
+        $("#actionbutton").val("add");
+        $("#modaltitle").html("<h4>add employee</h4>");
+        $("#theModal").modal("toggle");
+        $("#modalstatus").text("add new employee");
+        $("#theModalLabel").text("Add");
+        clearModalFields();
+    }; // setupForAdd
+    const setupForUpdate = (id, data) => {
+        $("#actionbutton").val("update");
+        $("#modaltitle").html("<h4>update employee</h4>");
+        clearModalFields();
+        data.forEach(employee => {
+            if (employee.id === parseInt(id)) {
+                $("#TextBoxT").val(employee.title);
+                // populate the other four text boxes here
+                $("#TextBoxFirstN").val(employee.firstname);
+                $("#TextBoxLastN").val(employee.lastname);
+                $("#TextBoxEmail").val(employee.email);
+                $("#TextBoxPhone").val(employee.phoneno);
+                sessionStorage.setItem("employee", JSON.stringify(employee));
+                $("#modalstatus").text("update data");
+                $("#theModal").modal("toggle");
+                $("#theModalLabel").text("Update");
+            } // if
+        }); // data.forEach
+    }; // setupForUpdate
+    const add = async () => {
+        try {
+            emp = new Object();
+            emp.title = $("#TextBoxT").val();
+            // populate the other four properties here from the text box contents
+            emp.firstname = $("#TextBoxFirstN").val();
+            emp.lastname = $("#TextBoxLastN").val();
+            emp.email = $("#TextBoxEmail").val();
+            emp.phoneno = $("#TextBoxPhone").val();
+            emp.departmentId = 100; // hard code it for now, we"ll add a dropdown later
+            emp.id = -1;
+            emp.timer = null;
+            emp.picture64 = null;
+            // send the student info to the server asynchronously using POST
+            let response = await fetch("api/employee", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json; charset=utf-8"
+                },
+                body: JSON.stringify(emp)
+            });
+            if (response.ok) // or check for response.status
+            {
+                let data = await response.json();
+                getAll(data.msg);
+            } else if (response.status !== 404) { // probably some other client side error
+                let problemJson = await response.json();
+                errorRtn(problemJson, response.status);
+            } else { // else 404 not found
+                $("#status").text("no such path on server");
+            } // else
+        } catch (error) {
+            $("#status").text(error.message);
+        } // try/catch
+        $("#theModal").modal("toggle");
+    }; // add
+    $("#actionbutton").on("click", () => {
+        $("#actionbutton").val() === "update" ? update() : add();
+    }); // actionbutton click
     $("#employeeList").on('click', (e) => {
         if (!e) e = window.event;
         let id = e.target.parentNode.id;
@@ -47,7 +124,7 @@ $(() => { // main jQuery routine - executes every on page load, $ is short for j
         } // clicked on row somewhere else
         if (id !== "status" && id !== "heading") {
             let data = JSON.parse(sessionStorage.getItem("allemployees"));
-            data.forEach(employee => {
+            /*data.forEach(employee => {
                 if (employee.id === parseInt(id)) {
                     $("#TextBoxPhone").val(employee.phoneno);
                     $("#TextBoxEmail").val(employee.email);
@@ -58,12 +135,14 @@ $(() => { // main jQuery routine - executes every on page load, $ is short for j
                     $("#modalstatus").text("update data");
                     $("#theModal").modal("toggle");
                 } // if
-            }); // data.map
+            }); // data.map*/
+            id === "0" ? setupForAdd() : setupForUpdate(id, data);
         } else {
             return false; // ignore if they clicked on heading or status
         }
     }); // employeeListClick
-    $("#actionbutton").on('click', async (e) => {
+    /*$("#actionbutton").on('click', async (e) => {*/
+    const update = async (e) => {
         // action button click event handler
         try {
             // set up a new client side instance of employee
@@ -99,7 +178,7 @@ $(() => { // main jQuery routine - executes every on page load, $ is short for j
             $("#status").text(error.message);
             console.table(error);
         } // try/catch
-    }); // action button click
+    }; // action button click
     const errorRtn = (problemJson, status) => {
         if (status > 499) {
             $("#status").text("Problem server side, see debug console");
