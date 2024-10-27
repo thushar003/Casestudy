@@ -1,13 +1,24 @@
 $(() => { // main jQuery routine - executes every on page load, $ is short for jquery
     const getAll = async (msg) => {
         try {
-            $("#employeeList").text("Finding employee Information...");
+            $("#employeeList").text("Finding Employee Information...");
             let response = await fetch(`api/employee`);
             if (response.ok) {
                 let payload = await response.json(); // this returns a promise, so we await it
                 buildEmployeeList(payload);
                 msg === "" ? // are we appending to an existing message
                     $("#status").text("Employees Loaded") : $("#status").text(`${msg} - Employees Loaded`);
+            } else if (response.status !== 404) { // probably some other client side error
+                let problemJson = await response.json();
+                errorRtn(problemJson, response.status);
+            } else { // else 404 not found
+                $("#status").text("no such path on server");
+            } // else
+            // get department data
+            response = await fetch(`api/department`);
+            if (response.ok) {
+                let divs = await response.json(); // this returns a promise, so we await it
+                sessionStorage.setItem("alldepartments", JSON.stringify(divs));
             } else if (response.status !== 404) { // probably some other client side error
                 let problemJson = await response.json();
                 errorRtn(problemJson, response.status);
@@ -39,8 +50,10 @@ $(() => { // main jQuery routine - executes every on page load, $ is short for j
             btn.appendTo($("#employeeList"));
         }); // forEach
     }; // buildEmployeeList
+    $("#dialog").hide();
     getAll(""); // first grab the data from the server
     const clearModalFields = () => {
+        loadDepartmentDDL(-1);
         $("#TextBoxT").val("");
         // clean out the other four text boxes go here as well
         $("#TextBoxFirstN").val("");
@@ -56,11 +69,13 @@ $(() => { // main jQuery routine - executes every on page load, $ is short for j
         $("#theModal").modal("toggle");
         $("#modalstatus").text("add new employee");
         $("#theModalLabel").text("Add");
+        $("#deletebutton").hide();
         clearModalFields();
     }; // setupForAdd
     const setupForUpdate = (id, data) => {
         $("#actionbutton").val("update");
         $("#modaltitle").html("<h4>update employee</h4>");
+        $("#deletebutton").show();
         clearModalFields();
         data.forEach(employee => {
             if (employee.id === parseInt(id)) {
@@ -70,6 +85,7 @@ $(() => { // main jQuery routine - executes every on page load, $ is short for j
                 $("#TextBoxLastN").val(employee.lastname);
                 $("#TextBoxEmail").val(employee.email);
                 $("#TextBoxPhone").val(employee.phoneno);
+                $("#ddlDepartments").val(employee.departmentId);
                 sessionStorage.setItem("employee", JSON.stringify(employee));
                 $("#modalstatus").text("update data");
                 $("#theModal").modal("toggle");
@@ -86,7 +102,7 @@ $(() => { // main jQuery routine - executes every on page load, $ is short for j
             emp.lastname = $("#TextBoxLastN").val();
             emp.email = $("#TextBoxEmail").val();
             emp.phoneno = $("#TextBoxPhone").val();
-            emp.departmentId = 100; // hard code it for now, we"ll add a dropdown later
+            emp.departmentId = parseInt($("#ddlDepartments").val());
             emp.id = -1;
             emp.timer = null;
             emp.picture64 = null;
@@ -113,6 +129,45 @@ $(() => { // main jQuery routine - executes every on page load, $ is short for j
         } // try/catch
         $("#theModal").modal("toggle");
     }; // add
+    const _delete = async () => {
+        let employee = JSON.parse(sessionStorage.getItem("employee"));
+        try {
+            let response = await fetch(`api/employee/${employee.id}`, {
+                method: 'DELETE',
+                headers: { 'Content-Type': 'application/json; charset=utf-8' }
+            });
+            if (response.ok) // or check for response.status
+            {
+                let data = await response.json();
+                getAll(data.msg);
+            } else {
+                $('#status').text(`Status - ${response.status}, Problem on delete server side, see server console`);
+            } // else
+            $('#theModal').modal('toggle');
+        } catch (error) {
+            $('#status').text(error.message);
+        }
+    }; // _delete
+    $("#deletebutton").on("click", () => {
+        $("#dialog").show();
+        $("#deletebutton").on("click", (e) => {
+            $("#dialog").show();
+            $("#status").text("");
+            //$("#dialogbutton").hide();
+        });
+        $("#nobutton").on("click", (e) => {
+            $("#modalstatus").text("delete cancelled");
+            $("#dialog").hide();
+            $("#deletebutton").show();
+        });
+        $("#yesbutton").on("click", () => {
+            $("#dialog").hide();
+            $("#modalstatus").text(`${msg} - Employees Loaded`);
+            _delete();
+            $("#deletebutton").show();
+        });
+        /*_delete();*/
+    }); // deletebutton click
     $("#actionbutton").on("click", () => {
         $("#actionbutton").val() === "update" ? update() : add();
     }); // actionbutton click
@@ -153,6 +208,7 @@ $(() => { // main jQuery routine - executes every on page load, $ is short for j
             emp.lastname = $("#TextBoxLastN").val();
             emp.email = $("TextBoxEmail").val();
             emp.phoneno = $("#TextBoxPhone").val();
+            emp.departmentId = parseInt($("#ddlDepartments").val());
             // send the updated back to the server asynchronously using Http PUT
             let response = await fetch("api/employee", {
                 method: "PUT",
@@ -192,4 +248,12 @@ $(() => { // main jQuery routine - executes every on page load, $ is short for j
             console.log(problem);
         } // else
     }
+    const loadDepartmentDDL = (studiv) => {
+        html = '';
+        $('#ddlDepartments').empty();
+        let alldepartments = JSON.parse(sessionStorage.getItem('alldepartments'));
+        alldepartments.forEach((div) => { html += `<option value="${div.id}">${div.name}</option>` });
+        $('#ddlDepartments').append(html);
+        $('#ddlDepartments').val(studiv);
+    }; // loadDivisionDDL
 }); // jQuery ready method

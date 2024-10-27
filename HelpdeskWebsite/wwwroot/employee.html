@@ -87,9 +87,18 @@
                                            id="TextBoxPhone"
                                            class="form-control" />
                                 </div>
+                                <div class="col-4">Department:</div>
+                                <div class="col-8"><select id="ddlDepartments" name="ddlDepartments" class="form-control"></select></div>
                             </div>
                             <div class="card-footer text-center">
                                 <input type="button" value="Update" id="actionbutton" class="m-3" />
+                                <input type="button" value="delete" id="deletebutton" class="m-3" />
+                                <div class="alert alert-danger fade show" role="alert" id="dialog" style="width:80%;margin-top:2vh;margin-left:10%;"
+                                     style="width:80vw;margin-top:2vh;margin-left:10vw;">
+                                    <strong>Delete Employee?</strong><p></p>
+                                    <input type="button" class="btn btn-secondary mt-3" value="Yes" id="yesbutton" />
+                                    <input type="button" class="btn btn-secondary mt-3" value="No" id="nobutton" />
+                                </div>
                                 <div id="status" class="text-left mt-3 mb-2"></div>
                             </div>
                         </div>
