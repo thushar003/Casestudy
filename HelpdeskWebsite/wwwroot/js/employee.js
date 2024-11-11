@@ -1,4 +1,54 @@
 $(() => { // main jQuery routine - executes every on page load, $ is short for jquery
+    document.addEventListener("keyup",
+        e => {
+            $("#modalstatus").removeClass(); //remove any existing css on div
+            if ($("#EmployeeModalForm").valid()) {
+                $("#modalstatus").attr("class", "badge bg-success"); //green
+                $("#modalstatus").text("data entered is valid");
+                $("#actionbutton").prop("disabled", false);
+            } else {
+                $("#modalstatus").attr("class", "badge bg-danger"); //red
+                $("#modalstatus").text("fix errors");
+                $("#actionbutton").prop("disabled", true);
+            }
+        });
+    $("#EmployeeModalForm").validate({
+        rules: {
+            TextBoxT: { maxlength: 4, required: true, validTitle: true },
+            TextBoxFirstN: { maxlength: 25, required: true },
+            TextBoxLastN: { maxlength: 25, required: true },
+            TextBoxEmail: { maxlength: 40, required: true, email: true },
+            TextBoxPhone: { maxlength: 15, required: true }
+        },
+        errorElement: "div",
+        messages: {
+            TextBoxT: {
+                required: "required 1-4 chars.",
+                maxlength: "required 1-4 chars.",
+                validTitle: "Mr. Ms. Mrs. or Dr."
+            },
+            TextBoxFirstN: {
+                required: "required 1-25 chars.",
+                maxlength: "required 1-25 chars."
+            },
+            TextBoxLastN: {
+                required: "required 1-25 chars.",
+                maxlength: "required 1-25 chars."
+            },
+            TextBoxPhone: {
+                required: "required 1-15 chars.",
+                maxlength: "required 1-15 chars."
+            },
+            TextBoxEmail: {
+                required: "required 1-40 chars.",
+                maxlength: "required 1-40 chars.",
+                email: "need valid email format"
+            }
+        }
+    }); //EmployeeModalForm.validate
+    $.validator.addMethod("validTitle", (value) => { //custome rule
+        return (value === "Mr." || value === "Ms." || value === "Mrs." || value === "Dr.");
+    }, ""); //.validator.addMethod
     const getAll = async (msg) => {
         try {
             $("#employeeList").text("Finding Employee Information...");
@@ -62,12 +112,15 @@ $(() => { // main jQuery routine - executes every on page load, $ is short for j
         $("#TextBoxEmail").val("");
         sessionStorage.removeItem("employee");
         $("#theModal").modal("toggle");
+        let validator = $("#EmployeeModalForm").validate();
+        validator.resetForm();
+        $("#status").attr("class", "");
     }; // clearModalFields
     const setupForAdd = () => {
         $("#actionbutton").val("add");
         $("#modaltitle").html("<h4>add employee</h4>");
         $("#theModal").modal("toggle");
-        $("#modalstatus").text("add new employee");
+        $("#status").text("add new employee");
         $("#theModalLabel").text("Add");
         $("#deletebutton").hide();
         clearModalFields();
