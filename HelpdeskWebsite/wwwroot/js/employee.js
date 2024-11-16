@@ -79,7 +79,12 @@ $(() => { // main jQuery routine - executes every on page load, $ is short for j
             $("#status").text(error.message);
         }
     }; // getAll
-    const buildEmployeeList = (data) => {
+    $("#srch").on("keyup", () => {
+        let alldata = JSON.parse(sessionStorage.getItem("allemployees"));
+        let filtereddata = alldata.filter((emp) => emp.lastname.match(new RegExp($("#srch").val(), 'i')));
+        buildEmployeeList(filtereddata, false);
+    }); // srch keyup
+    const buildEmployeeList = (data, usealldata = true) => {
         $("#employeeList").empty();
         div = $(`<div class="list-group-item text-blue bg-green row d-flex text-white" id="status">Employee Info</div>
 <div class= "list-group-item row d-flex text-center" id="heading">
@@ -88,7 +93,7 @@ $(() => { // main jQuery routine - executes every on page load, $ is short for j
 <div class="col-4 h4">Last</div>
 </div>`);
         div.appendTo($("#employeeList"));
-        sessionStorage.setItem("allemployees", JSON.stringify(data));
+        usealldata ? sessionStorage.setItem("allemployees", JSON.stringify(data)) : null;
         btn = $(`<button class="list-group-item row d-flex" id="0">...click to add employee</button>`);
         btn.appendTo($("#employeeList"));
         data.forEach(emp => {
