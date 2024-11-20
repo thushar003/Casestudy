@@ -23,3 +23,9 @@ div.error {
     vertical-align: baseline;
     border-radius: .25rem;
 }
+
+#imageHolder img {
+    max-height: 120px;
+    max-width: 110px;
+    object-fit: cover;
+}

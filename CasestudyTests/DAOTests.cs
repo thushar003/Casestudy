@@ -105,5 +105,14 @@ namespace CasestudyTests
             else
                 Assert.True(false); // didn't find employee 1
         }
+
+        [Fact]
+        public async Task Employee_LoadPicsTest()
+        {
+            {
+                PicsUtility util = new();
+                Assert.True(await util.AddEmployeePicsToDb());
+            }
+        }
     }
 }

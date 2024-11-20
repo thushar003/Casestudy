@@ -91,3 +91,6 @@ USE MASTER;
 USE HelpdeskDb;
 
 SELECT * FROM Employees;
+
+SELECT firstname, LEN(staffpicture) AS '# of bytes in pic' FROM Employees
+GO

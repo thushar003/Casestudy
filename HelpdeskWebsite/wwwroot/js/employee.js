@@ -79,11 +79,34 @@ $(() => { // main jQuery routine - executes every on page load, $ is short for j
             $("#status").text(error.message);
         }
     }; // getAll
+
     $("#srch").on("keyup", () => {
         let alldata = JSON.parse(sessionStorage.getItem("allemployees"));
         let filtereddata = alldata.filter((emp) => emp.lastname.match(new RegExp($("#srch").val(), 'i')));
         buildEmployeeList(filtereddata, false);
     }); // srch keyup
+
+    $("input:file").on("change", () => {
+        try {
+            const reader = new FileReader();
+            const file = $("#uploader")[0].files[0];
+            $("#uploadstatus").text("");
+            file ? reader.readAsBinaryString(file) : null;
+            reader.onload = (readerEvt) => {
+                // get binary data then convert to encoded string
+                const binaryString = reader.result;
+                const encodedString = btoa(binaryString);
+                // replace the picture in session storage
+                let employee = JSON.parse(sessionStorage.getItem("employee"));
+                employee.staffpicture64 = encodedString;
+                sessionStorage.setItem("employee", JSON.stringify(employee));
+                $("#uploadstatus").text("retrieved local pic")
+            };
+        } catch (error) {
+            $("#uploadstatus").text("pic upload failed")
+        }
+    }); // input file change
+
     const buildEmployeeList = (data, usealldata = true) => {
         $("#employeeList").empty();
         div = $(`<div class="list-group-item text-blue bg-green row d-flex text-white" id="status">Employee Info</div>
@@ -116,6 +139,10 @@ $(() => { // main jQuery routine - executes every on page load, $ is short for j
         $("#TextBoxPhoneNo").val("");
         $("#TextBoxEmail").val("");
         sessionStorage.removeItem("employee");
+        sessionStorage.removeItem("staffpicture");
+        $("#uploadstatus").text("");
+        $("#imageHolder").html("");
+        $("#uploader").val("");
         $("#theModal").modal("toggle");
         let validator = $("#EmployeeModalForm").validate();
         validator.resetForm();
@@ -148,6 +175,7 @@ $(() => { // main jQuery routine - executes every on page load, $ is short for j
                 $("#modalstatus").text("update data");
                 $("#theModal").modal("toggle");
                 $("#theModalLabel").text("Update");
+                $("#imageHolder").html(`<img height="120" width="110" src="data:img/png;base64,${employee.staffPicture64}" />`);
             } // if
         }); // data.forEach
     }; // setupForUpdate
@@ -163,7 +191,7 @@ $(() => { // main jQuery routine - executes every on page load, $ is short for j
             emp.departmentId = parseInt($("#ddlDepartments").val());
             emp.id = -1;
             emp.timer = null;
-            emp.picture64 = null;
+            emp.staffpicture64 = null;
             // send the student info to the server asynchronously using POST
             let response = await fetch("api/employee", {
                 method: "POST",
