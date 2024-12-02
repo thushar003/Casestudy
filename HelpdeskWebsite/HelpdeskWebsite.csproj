@@ -4,6 +4,7 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <BaseOutputPath>C:\Users\Thushar\source\repos\Casestudy\HelpdeskDAL\bin\Debug\net8.0</BaseOutputPath>
   </PropertyGroup>
 
   <ItemGroup>
@@ -11,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\HelpdeskDAL\HelpdeskDAL.csproj" />
     <ProjectReference Include="..\HelpdeskViewModels\HelpdeskViewModels.csproj" />
   </ItemGroup>
 
