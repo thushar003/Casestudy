@@ -28,6 +28,22 @@ namespace HelpdeskDAL
             return selectedEmployee;
         }
 
+        public async Task<Employee> GetByLastname(string lastname)
+        {
+            Employee? selectedEmployee;
+            try
+            {
+                selectedEmployee = await _repo.GetOne(emp => emp.LastName == lastname);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Problem in " + GetType().Name + " " + MethodBase.GetCurrentMethod()!.Name + " " + ex.Message);
+                throw;
+            }
+
+            return selectedEmployee;
+        }
+
         public async Task<Employee> GetByPhoneNumber(string phoneNum)
         {
             Employee? selectedEmployee;

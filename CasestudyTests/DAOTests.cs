@@ -228,31 +228,36 @@ namespace CasestudyTests
         {
             CallDAO dao = new();
             EmployeeDAO empDao = new();
+            ProblemDAO pDao = new();
+            Employee pEm = await empDao.GetByLastname("Joji");
+            Employee em = await empDao.GetByLastname("Burner");
+            Problem badDrive = await pDao.GetByDescription("Hard Drive Failure");
             Call newCall = new()
             {
-                EmployeeId = empDao.GetById(11),
-                LastName = "Smith",
-                PhoneNo = "(555)555-1234",
-                Title = "Mr.",
-                DepartmentId = 100,
-                Email = "js@abc.com"
+                EmployeeId = pEm.Id,
+                TechId = em.Id,
+                ProblemId = badDrive.Id,
+                DateOpened = DateTime.Now,
+                DateClosed = null,
+                OpenStatus = true,
+                Notes = "Joji's drive is shot, Burner to fix it",
             };
             int newCallId = await dao.Add(newCall);
             output.WriteLine("New Call Generated - Id = " + newCallId);
             newCall = await dao.GetById(newCallId);
             byte[] oldtimer = newCall.Timer!;
             output.WriteLine("New Call " + newCall.Id + " Retrieved");
-            newCall.PhoneNo = "(555)555-1233";
+            newCall.Notes += "\nOrdered new drive!";
             if (await dao.Update(newCall) == UpdateStatus.Ok)
             {
-                output.WriteLine("Call " + newCallId + " phone# was updated to - " + newCall.PhoneNo);
+                output.WriteLine("Call " + newCallId + " notes were updated to - " + newCall.Notes);
             }
             else
             {
-                output.WriteLine("Call " + newCallId + " phone# was not updated!");
+                output.WriteLine("Call " + newCallId + " notes were not updated!");
             }
             newCall.Timer = oldtimer; // to simulate another user
-            newCall.PhoneNo = "doesn't matter data is stale now";
+            newCall.Notes = "doesn't matter data is stale now";
             if (await dao.Update(newCall) == UpdateStatus.Stale)
             {
                 output.WriteLine("Call " + newCallId + " was not updated due to stale data");
@@ -261,7 +266,7 @@ namespace CasestudyTests
             await dao.GetById(newCallId);
             if (await dao.Delete(newCallId) == 1)
             {
-                output.WriteLine("Employee " + newCallId + " was deleted!");
+                output.WriteLine("Call " + newCallId + " was deleted!");
             }
             else
             {
@@ -274,48 +279,54 @@ namespace CasestudyTests
         [Fact]
         public async Task Call_ComprehensiveVMTest()
         {
-            EmployeeViewModel evm = new()
+            EmployeeDAO empDao = new();
+            ProblemDAO pDao = new();
+            Employee pEm = await empDao.GetByLastname("Joji");
+            Employee em = await empDao.GetByLastname("Burner");
+            Problem badDrive = await pDao.GetByDescription("Memory Upgrade");
+            CallViewModel evm = new()
             {
-                Title = "Mr.",
-                Firstname = "Some",
-                Lastname = "Employee",
-                Email = "some@abc.com",
-                Phoneno = "(777)777-7777",
-                DepartmentId = 100 // ensure department id is in Departments table
+                EmployeeId = pEm.Id,
+                TechId = em.Id,
+                ProblemId = badDrive.Id,
+                DateOpened = DateTime.Now,
+                DateClosed = null,
+                OpenStatus = true,
+                Notes = "Joji has bad RAM, Burner to fix it",
             };
             await evm.Add();
-            output.WriteLine("New Employee Added - Id = " + evm.Id);
+            output.WriteLine("New Call Added - Id = " + evm.Id);
             int? id = evm.Id; // need id for delete later
             await evm.GetById();
-            output.WriteLine("New Employee " + id + " Retrieved");
-            evm.Phoneno = "(555)555-1233";
+            output.WriteLine("New Call " + id + " Retrieved");
+            evm.Notes += "\nOrdered new RAM!";
             if (await evm.Update() == 1)
             {
-                output.WriteLine("Employee " + id + " phone# was updated to - " +
-                                 evm.Phoneno);
+                output.WriteLine("Call " + id + " notes were updated to - " +
+                                 evm.Notes);
             }
             else
             {
-                output.WriteLine("Employee " + id + " phone# was not updated!");
+                output.WriteLine("Call " + id + " notes were not updated!");
             }
-            evm.Phoneno = "Another change that should not work";
+            evm.Notes = "Another change that should not work";
             if (await evm.Update() == -2)
             {
-                output.WriteLine("Employee " + id + " was not updated due to stale data");
+                output.WriteLine("Call " + id + " was not updated due to stale data");
             }
-            evm = new EmployeeViewModel
+            evm = new CallViewModel
             {
-                Id = id
+                Id = (int)id
             };
             // need to reset because of concurrency error
             await evm.GetById();
             if (await evm.Delete() == 1)
             {
-                output.WriteLine("Employee " + id + " was deleted!");
+                output.WriteLine("Call " + id + " was deleted!");
             }
             else
             {
-                output.WriteLine("Employee " + id + " was not deleted");
+                output.WriteLine("Call " + id + " was not deleted");
             }
             // should throw expected exception
             Task<NullReferenceException> ex = Assert.ThrowsAsync<NullReferenceException>(async ()

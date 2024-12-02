@@ -24,6 +24,12 @@ namespace HelpdeskDAL
         public string? Notes { get; set; }
         public string? Timer { get; set; }
 
+        // constructor
+        public CallViewModel()
+        {
+            _dao = new CallDAO();
+        }
+
         public async Task GetById()
         {
             try
@@ -94,6 +100,7 @@ namespace HelpdeskDAL
                     DateOpened = DateOpened,
                     DateClosed = DateClosed,
                     OpenStatus = OpenStatus,
+                    Notes = Notes!,
                 };
                 Id = await _dao.Add(call);
             }
