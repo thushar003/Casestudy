@@ -1,0 +1,129 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Calls</title>
+    <link rel="icon" href="data:;base64,iVBORwOKGgo=" />
+    <link href="/lib/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/css/employee.css" rel="stylesheet" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+</head>
+
+<body>
+<nav class="navbar navbar-expand-md navbar-light bg-danger">
+    <a class="navbar-brand mx-3" href="#">Case #2</a>
+    <button class="navbar-toggler mx-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarContent">
+        <ul class="navbar-nav mx-3">
+            <li class="nav-item">
+                <a class="nav-link" href="/home.html">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/employee.html">Employee</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" href="/call.html">Call</a>
+            </li>
+        </ul>
+        <form>
+            <input class="form-control" type="search" placeholder="Search" id="srch" aria-label="Search"
+                   style="width:10vw;margin-right:20vw;">
+        </form>
+    </div>
+</nav>
+<div id="image">
+    <img src="/img/helpdesk.jpg" height="100px" width="100px" />
+</div>
+<div class="justify-content-center align-items-center row mt-5 ml-1">
+    <div class="col-12 text-center p-3"><h2>Calls</h2></div>
+    <div class="list-group col-10" id="callList" style="height:45vh;">
+    </div>
+</div>
+
+<!-- This <div> contains the modal markup -->
+<form id="CallModalForm" name="CallModalForm" method="post" action="">
+    <div class="modal fade" id="theModal" data-bs-backdrop="static"
+         data-bs-keyboard="false" tabindex="-1" aria-labelledby="theModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="modal-title" id="modaltitle">Update Call</h2>
+                    <img src="/img/helpdesk.jpg" height="100px" width="100px" />
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="card">
+                        <div class="card-header text-center">
+                            Add/Update Call
+                        </div>
+                        <div class="card-body p-0 ml-1">
+                            <div class="row">
+                                <div class="col-4">Problem:</div>
+                                <div class="col-8">
+                                    <select id="ddlProblems" name="ddlProblems" class="form-control"></select>
+                                </div>
+                                <div class="col-4">Employee:</div>
+                                <div class="col-8">
+                                    <select id="ddlEmployees" name="ddlEmployees" class="form-control"></select>
+                                </div>
+                                <div class="col-4">Technician::</div>
+                                <div class="col-8">
+                                    <select id="ddlTech" name="ddlTech" class="form-control"></select>
+                                </div>
+                                <div class="col-4">Email:</div>
+                                <div class="col-8">
+                                    <input type="text"
+                                           placeholder="enter email"
+                                           name="TextBoxEmail"
+                                           id="TextBoxEmail"
+                                           class="form-control" />
+                                </div>
+                                <div class="col-4">Phone Number:</div>
+                                <div class="col-8">
+                                    <input type="text"
+                                           placeholder="enter phone number"
+                                           name="TextBoxPhone"
+                                           id="TextBoxPhone"
+                                           class="form-control" />
+                                </div>
+                                <div class="col-4">Department:</div>
+                                <div class="col-8"><select id="ddlDepartments" name="ddlDepartments" class="form-control"></select></div>
+                                <div class="row mt-3">
+                                    <div class="col-4">Picture:</div>
+                                    <div class="col-8" id="imageHolder"></div>
+                                </div>
+                            </div>
+                            <div class="card-footer text-center">
+                                <div class="row border m-2 p-2">
+                                    <label for="file">Choose Different Picture?</label>
+                                    <input type="file" id="uploader" class="text-center btn btn-outline-secondary" />
+                                    <div id="uploadstatus" class="text-left"></div>
+                                </div>
+                                <input type="button" value="Update" id="actionbutton" name="actionbutton" class="m-3" />
+                                <input type="button" value="delete" id="deletebutton" name="deletebutton" class="m-3" />
+                                <div class="alert alert-danger fade show" role="alert" id="dialog" style="width:80%;margin-top:2vh;margin-left:10%;"
+                                     style="width:80vw;margin-top:2vh;margin-left:10vw;">
+                                    <strong>Delete Employee?</strong>
+                                    <p></p>
+                                    <input type="button" class="btn btn-secondary mt-3" value="Yes" id="yesbutton" />
+                                    <input type="button" class="btn btn-secondary mt-3" value="No" id="nobutton" />
+                                </div>
+                                <div id="modalstatus" class="text-left mt-3 mb-2"></div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+    <script src="/lib/js/jquery.min.js"></script>
+    <script src="/lib/js/bootstrap.min.js"></script>
+    <script src="/js/call.js"></script>
+    
+</body>
+</html>
