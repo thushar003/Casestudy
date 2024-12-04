@@ -111,6 +111,7 @@ namespace HelpdeskViewModels
                         DepartmentName = emp.Department.DepartmentName,
                         Timer = Convert.ToBase64String(emp.Timer!)
                     };
+                    IsTech = emp.IsTech ?? false;
                     if (emp.StaffPicture != null)
                     {
                         empVm.StaffPicture64 = Convert.ToBase64String(emp.StaffPicture);
