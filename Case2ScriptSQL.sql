@@ -101,7 +101,7 @@ CREATE TABLE Calls
 GO
 SELECT COUNT(*) AS Problems FROM Problems
 GO
-SELECT COUNT(*) Departments FROM Departments
+SELECT COUNT(*) AS Departments FROM Departments
 GO
 SELECT COUNT(*) AS Employees FROM Employees
 GO
