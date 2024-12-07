@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -50,6 +51,26 @@ namespace HelpdeskDAL
             }
 
             return allProblems;
+        }
+
+        public async Task<UpdateStatus> Update(Problem updatedProblem)
+        {
+            UpdateStatus status = UpdateStatus.Failed;
+            try
+            {
+                status = await _repo.Update(updatedProblem);
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                status = UpdateStatus.Stale;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Problem in " + GetType().Name + " " + MethodBase.GetCurrentMethod()!.Name + " " + ex.Message);
+                throw;
+            }
+
+            return status;
         }
     }
 }

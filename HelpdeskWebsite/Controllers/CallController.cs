@@ -10,7 +10,7 @@ namespace HelpdeskWebsite.Controllers
     [ApiController]
     public class CallController : ControllerBase
     {
-        [HttpGet("{email}")]
+        [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
             try

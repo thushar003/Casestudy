@@ -68,34 +68,42 @@
                                 <div class="col-8">
                                     <select id="ddlEmployees" name="ddlEmployees" class="form-control"></select>
                                 </div>
-                                <div class="col-4">Technician::</div>
+                                <div class="col-4">Technician:</div>
                                 <div class="col-8">
                                     <select id="ddlTech" name="ddlTech" class="form-control"></select>
                                 </div>
-                                <div class="col-4">Date Opened:</div>
-                                <div class="col-8" id="TextBoxOpenDate" name="TextBoxOpenDate"></div>
-                                <div class="col-4">Date Closed:</div>
-                                <div class="col-8" id="TextBoxCloseDate" name="TextBoxCloseDate"></div>
-                                <div class="col-4">Close Call:</div>
-                                <div class="col-8">
-                                    <checkbox id="checkBoxClose" name="checkBoxClose"></checkbox>
+                                <div class="row">
+                                    <div class="col-4">Date Opened:</div>
+                                    <div class="col-8" id="labelDateOpened"></div>
                                 </div>
-                                <div class="col-4">Notes:
-                                    <textarea id="TextBoxNotes" name="TextBoxNotes" class="mt-2 form-control">
-                                    </textarea>
+                                <div class="row" id="DateCloseRow">
+                                    <div class="col-4">Date Closed:</div>
+                                    <div class="col-8" id="labelDateClosed"></div>
+                                </div>
+                                <div class="row" id="CloseCallRow">
+                                    <div class="col-4">Close Call:</div>
+                                    <div class="col-8">
+                                        <input type="checkbox" id="checkBoxClose" name="checkBoxClose" />
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-4">Notes:</div>
+                                    <div class="col-sm-2"></div>
+                                        <textarea id="TextBoxNotes" name="TextBoxNotes" class="mt-sm-3 form-control"></textarea>
+                                    </div>
+                                </div>
+                                </div>
+                                <div class="card-footer text-center">
+                                    <input type="button" value="Update" id="actionbutton" name="actionbutton" class="m-3" />
+                                    <div id="modalstatus" class="text-left mt-3 mb-2"></div>
                                 </div>
                             </div>
-                            <div class="card-footer text-center">
-                                <input type="button" value="Update" id="actionbutton" name="actionbutton" class="m-3" />
-                                <div id="modalstatus" class="text-left mt-3 mb-2"></div>
-                            </div>
-                        </div>
 
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    <!--</div>-->
 </form>
 
     <script src="/lib/js/jquery.min.js"></script>

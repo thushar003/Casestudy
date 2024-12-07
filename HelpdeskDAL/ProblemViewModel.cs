@@ -2,14 +2,18 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using static Azure.Core.HttpHeader;
 
 namespace HelpdeskDAL
 {
     public class ProblemViewModel
     {
         private readonly ProblemDAO _dao;
+
+        public int Id { get; set; }
         public string? Description { get; set; }
 
         // constructor
@@ -59,6 +63,27 @@ namespace HelpdeskDAL
             }
 
             return allVms;
+        }
+
+        public async Task<int> Update()
+        {
+            int updateStatus;
+            try
+            {
+                Problem prob = new()
+                {
+                    Description = Description
+                };
+                updateStatus = -1; // start out with a failed state
+                updateStatus = Convert.ToInt16(await _dao.Update(prob)); // overwrite status
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Problem in " + GetType().Name + " " +
+                                MethodBase.GetCurrentMethod()!.Name + " " + ex.Message);
+                throw;
+            }
+            return updateStatus;
         }
     }
 }

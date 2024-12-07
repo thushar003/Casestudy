@@ -37,12 +37,15 @@ namespace HelpdeskDAL
                 Call call = await _dao.GetById((int)Id!);
                 Id = call.Id;
                 EmployeeId = call.EmployeeId;
+                EmployeeName = call.Employee.LastName;
                 ProblemId = call.ProblemId;
+                ProblemDescription = call.Problem.Description;
                 TechId = call.TechId;
+                TechName = call.Tech.LastName;
                 DateOpened = call.DateOpened;
                 DateClosed = call.DateClosed;
                 OpenStatus = call.OpenStatus;
-                Timer = Convert.ToBase64String(call.Timer);
+                Timer = Convert.ToBase64String(call.Timer!);
             }
             catch (NullReferenceException nex)
             {
@@ -67,9 +70,12 @@ namespace HelpdeskDAL
                     CallViewModel empVm = new()
                     {
                         Id = call.Id,
-                        ProblemId = call.ProblemId,
                         EmployeeId = call.EmployeeId,
+                        EmployeeName = call.Employee.LastName,
+                        ProblemId = call.ProblemId,
+                        ProblemDescription = call.Problem.Description,
                         TechId = call.TechId,
+                        TechName = call.Tech.LastName,
                         DateOpened = call.DateOpened,
                         DateClosed = call.DateClosed,
                         OpenStatus = call.OpenStatus,
@@ -117,6 +123,10 @@ namespace HelpdeskDAL
             int updateStatus;
             try
             {
+                if (!this.OpenStatus)
+                {
+                    this.DateClosed = DateTime.Now;
+                }
                 Call call = new()
                 {
                     Id = (int)Id!,
