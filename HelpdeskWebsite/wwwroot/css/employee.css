@@ -5,6 +5,10 @@
     color: black;
 }
 
+body {
+    background-color: antiquewhite;
+}
+
 button.list-group-item {
     color: darkslategray;
     font-family: Helvetica;

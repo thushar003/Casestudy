@@ -12,6 +12,8 @@ $(() => { // main jQuery routine - executes every on page load, $ is short for j
                 $("#actionbutton").prop("disabled", true);
             }
         });
+
+    //My call webpage is pretty buggy, uncommenting the code below causes the list to basically vanish
     //$("#CallModalForm").validate({
     //    rules: {
     //        ddlProblems: { required: true },
@@ -186,8 +188,6 @@ $(() => { // main jQuery routine - executes every on page load, $ is short for j
         }
     }; // clearModalFields
     const formatDate = (date) => {
-        /*let d;
-        (date === undefined) ? d = new Date() : d = new Date(Date.parse(date));*/
         let d = new Date(date);
         let _day = d.getDate();
         if (_day < 10) {
@@ -243,6 +243,8 @@ $(() => { // main jQuery routine - executes every on page load, $ is short for j
             } // if
         }); // data.forEach
     }; // setupForUpdate
+
+    //make tbe modal pop up when clicking on a call's details
     $("#callList").on('click', (e) => {
         if (!e) e = window.event;
         let id = e.target.parentNode.id;
@@ -256,6 +258,8 @@ $(() => { // main jQuery routine - executes every on page load, $ is short for j
             return false; // ignore if they clicked on heading or status
         }
     }); // employeeListClick
+
+    //add method
     const add = async () => {
         try {
             emp = new Object();
@@ -290,6 +294,8 @@ $(() => { // main jQuery routine - executes every on page load, $ is short for j
         } // try/catch
         $("#theModal").modal("toggle");
     }; // add
+
+    //update method
     const update = async (e) => {
         // action button click event handler
         try {
@@ -343,6 +349,8 @@ $(() => { // main jQuery routine - executes every on page load, $ is short for j
             console.log(problem);
         } // else
     }
+
+    //problem drop down list
     const loadProblemDDL = (studiv) => {
         probHtml = '';
         $('#ddlProblems').empty();
@@ -351,6 +359,8 @@ $(() => { // main jQuery routine - executes every on page load, $ is short for j
         $('#ddlProblems').append(probHtml);
         $('#ddlProblems').val(studiv);
     }; // loadProblemDDL
+
+    //employee drop down list
     const loadEmployeeDDL = (studiv) => {
         empHtml = '';
         $('#ddlEmployees').empty();
@@ -359,6 +369,8 @@ $(() => { // main jQuery routine - executes every on page load, $ is short for j
         $('#ddlEmployees').append(empHtml);
         $('#ddlEmployees').val(studiv);
     }; // loadEmployeeDDL
+
+    //technician drop down list
     const loadTechnicianDDL = (studiv) => {
         techHtml = '';
         $('#ddlTech').empty();
