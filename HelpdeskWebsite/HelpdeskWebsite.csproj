@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="itext7" Version="7.2.5" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
   </ItemGroup>
 
@@ -22,6 +23,7 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\img\" />
+    <Folder Include="wwwroot\pdfs\" />
   </ItemGroup>
 
 </Project>
