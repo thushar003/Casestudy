@@ -1,4 +1,9 @@
-﻿using HelpdeskViewModels;
+﻿/*
+ * File: CallController.cs
+ * @author: Thushar Joseph Joji, 1190586
+ */
+
+using HelpdeskViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using System.Reflection;
@@ -57,6 +62,24 @@ namespace HelpdeskWebsite.Controllers
                 CallViewModel viewmodel = new();
                 List<CallViewModel> allCalls = await viewmodel.GetAll();
                 return Ok(allCalls);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Problem in " + GetType().Name + " " +
+                                MethodBase.GetCurrentMethod()!.Name + " " + ex.Message);
+                return StatusCode(StatusCodes.Status500InternalServerError); // something went wrong
+            }
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> Post(CallViewModel viewmodel)
+        {
+            try
+            {
+                await viewmodel.Add();
+                return viewmodel.Id > 1
+                    ? Ok(new { msg = "Call " + viewmodel.EmployeeName + " added!" })
+                    : Ok(new { msg = "Call " + viewmodel.EmployeeName + " not added!" });
             }
             catch (Exception ex)
             {

@@ -1,4 +1,9 @@
-﻿using System.Diagnostics;
+﻿/*
+ * File: EmployeeController.cs
+ * @author: Thushar Joseph Joji, 1190586
+ */
+
+using System.Diagnostics;
 using System.Reflection;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;

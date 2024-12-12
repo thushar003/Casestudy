@@ -1,4 +1,8 @@
-﻿using System;
+﻿/*
+ * File: ViewModelTests.cs
+ * @author: Thushar Joseph Joji, 1190586
+ */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;

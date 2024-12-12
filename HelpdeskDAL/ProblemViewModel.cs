@@ -1,4 +1,9 @@
-﻿using System;
+﻿/*
+ * File: ProblemViewModel.cs
+ * @author: Thushar Joseph Joji, 1190586
+ */
+
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;

@@ -1,4 +1,9 @@
-﻿using HelpdeskWebsite.Reports;
+﻿/*
+ * File: ReportController.cs
+ * @author: Thushar Joseph Joji, 1190586
+ */
+
+using HelpdeskWebsite.Reports;
 using Microsoft.AspNetCore.Mvc;
 namespace HelpdeskWebsite.Controllers
 {

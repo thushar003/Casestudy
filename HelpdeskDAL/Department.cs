@@ -1,4 +1,9 @@
-﻿using System;
+﻿/*
+ * File: Department.cs
+ * @author: Thushar Joseph Joji, 1190586
+ */
+
+using System;
 using System.Collections.Generic;
 
 namespace HelpdeskDAL;

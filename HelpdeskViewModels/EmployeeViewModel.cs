@@ -1,4 +1,9 @@
-﻿using HelpdeskDAL;
+﻿/*
+ * File: EmployeeViewModel.cs
+ * @author: Thushar Joseph Joji, 1190586
+ */
+
+using HelpdeskDAL;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;

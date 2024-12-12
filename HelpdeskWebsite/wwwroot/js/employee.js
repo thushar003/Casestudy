@@ -12,6 +12,7 @@ $(() => { // main jQuery routine - executes every on page load, $ is short for j
                 $("#actionbutton").prop("disabled", true);
             }
         });
+
     $("#EmployeeModalForm").validate({
         rules: {
             TextBoxT: { maxlength: 4, required: true, validTitle: true },
@@ -46,9 +47,11 @@ $(() => { // main jQuery routine - executes every on page load, $ is short for j
             }
         }
     }); //EmployeeModalForm.validate
+
     $.validator.addMethod("validTitle", (value) => { //custome rule
         return (value === "Mr." || value === "Ms." || value === "Mrs." || value === "Dr.");
     }, ""); //.validator.addMethod
+
     const getAll = async (msg) => {
         try {
             $("#employeeList").text("Finding Employee Information...");
@@ -128,8 +131,10 @@ $(() => { // main jQuery routine - executes every on page load, $ is short for j
             btn.appendTo($("#employeeList"));
         }); // forEach
     }; // buildEmployeeList
+
     $("#dialog").hide();
     getAll(""); // first grab the data from the server
+
     const clearModalFields = () => {
         loadDepartmentDDL(-1);
         $("#TextBoxT").val("");
@@ -265,18 +270,6 @@ $(() => { // main jQuery routine - executes every on page load, $ is short for j
         } // clicked on row somewhere else
         if (id !== "status" && id !== "heading") {
             let data = JSON.parse(sessionStorage.getItem("allemployees"));
-            /*data.forEach(employee => {
-                if (employee.id === parseInt(id)) {
-                    $("#TextBoxPhone").val(employee.phoneno);
-                    $("#TextBoxEmail").val(employee.email);
-                    $("#TextBoxFirstN").val(employee.firstname);
-                    $("#TextBoxLastN").val(employee.lastname);
-                    $("#TextBoxT").val(employee.title);
-                    sessionStorage.setItem("employee", JSON.stringify(employee));
-                    $("#modalstatus").text("update data");
-                    $("#theModal").modal("toggle");
-                } // if
-            }); // data.map*/
             id === "0" ? setupForAdd() : setupForUpdate(id, data);
         } else {
             return false; // ignore if they clicked on heading or status
